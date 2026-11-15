@@ -37,26 +37,21 @@ img{display:block;max-width:100%}
 .nombre .i svg{position:absolute;width:.30em;height:.3517em;left:.0936em;top:-.075em;overflow:visible}
 .ico{flex:none;border-radius:22.37%;background:var(--noche);box-shadow:0 0 0 1px var(--linea2) inset}
 
-/* intro: la i que brota */
-#intro{position:fixed;inset:0;z-index:100;background:var(--noche);display:grid;place-items:center;overflow:hidden;cursor:pointer;transition:opacity .6s ease .15s,visibility .6s .15s}
+/* intro: la i que brota (planta dibujada en grande y nítida; se encoge hasta el icono) */
+#intro{position:fixed;inset:0;z-index:100;background:var(--noche);overflow:hidden;cursor:pointer;transition:opacity .7s ease .1s,visibility .7s .1s}
 #intro.fuera{opacity:0;visibility:hidden}
-#intro .lock{position:relative;display:flex;align-items:center;gap:.2em;font-size:clamp(40px,11.5vw,84px);transition:transform .7s cubic-bezier(.6,0,.3,1),opacity .5s ease}
-#intro.fuera .lock{transform:translateY(-.5em) scale(.96);opacity:0}
-#intro .sim{position:relative;width:1.22em;height:1.22em;flex:none;overflow:visible;will-change:transform}
-#intro .sim::before{content:'';position:absolute;inset:0;border-radius:22.37%;background:#161618;box-shadow:0 0 0 1px var(--linea2) inset,0 20px 50px -20px rgba(63,214,138,.35);opacity:0;transform:scale(.7);transition:opacity .55s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
-#intro .sim.caja::before{opacity:1;transform:none}
-#intro .sim svg{width:100%;height:100%;overflow:visible;position:relative}
-#intro .brillo{position:absolute;left:50%;top:22%;width:2.6em;height:2.6em;margin:-1.3em 0 0 -1.3em;border-radius:50%;background:radial-gradient(closest-side,rgba(63,214,138,.38),rgba(63,214,138,0));opacity:0;animation:brillo 1.5s ease-out .55s both;pointer-events:none}
-@keyframes brillo{0%{opacity:0;transform:scale(.3)}35%{opacity:1}100%{opacity:0;transform:scale(1.35)}}
-#intro .palo{transform-box:fill-box;transform-origin:50% 100%;animation:crece .6s cubic-bezier(.2,.9,.25,1.15) .1s both}
-#intro .hoja{transform-box:fill-box;transform-origin:0% 100%;animation:brota .95s cubic-bezier(.25,.8,.3,1) .5s both}
-@keyframes crece{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+#intro .lock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.2em;font-size:clamp(40px,11.5vw,84px);transition:opacity .6s ease,margin .8s cubic-bezier(.6,0,.3,1)}
+#intro.fuera .lock,#intro.fuera .sim{opacity:0;margin-top:-.6em}
+#intro .hueco{width:1.22em;height:1.22em;flex:none}
+#intro .sim{position:absolute;left:50%;top:50%;width:min(5.2em,74vw,56vh);height:min(5.2em,74vw,56vh);font-size:clamp(40px,11.5vw,84px);transform:translate(-50%,-50%);transition:opacity .6s ease,margin .8s cubic-bezier(.6,0,.3,1)}
+#intro .sim svg{width:100%;height:100%;overflow:visible;display:block}
+#intro .caja{opacity:0}
+#intro .nombre{font-size:1em;clip-path:inset(-1em -.5em -.32em -.5em)}
+#intro .l{display:inline-block;opacity:0;transform:translateY(1em);animation:letra .75s cubic-bezier(.2,.75,.15,1) calc(2.3s + var(--k)*.035s) forwards}
+@keyframes letra{to{opacity:1;transform:none}}
+#intro .nombre .i svg path{transform-box:fill-box;transform-origin:0% 100%;animation:brota .8s cubic-bezier(.25,.8,.3,1) 2.75s both}
 @keyframes brota{0%{transform:scale(0) rotate(-40deg)}55%{transform:scale(1.12) rotate(7deg)}78%{transform:scale(.97) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
-#intro .nombre{font-size:1em}
-#intro .l{display:inline-block;opacity:0;transform:translateY(.32em);filter:blur(8px);animation:letra .6s cubic-bezier(.2,.8,.2,1) calc(1.3s + var(--k)*.04s) forwards}
-@keyframes letra{to{opacity:1;transform:none;filter:blur(0)}}
-#intro .nombre .i svg path{transform-box:fill-box;transform-origin:0% 100%;animation:brota .8s cubic-bezier(.25,.8,.3,1) 1.75s both}
-#intro .lema{position:absolute;left:50%;top:calc(100% + .55em);transform:translate(-50%,8px);white-space:nowrap;font-size:clamp(17px,4.4vw,24px);color:var(--gris);opacity:0;animation:lema .8s ease 1.85s forwards}
+#intro .lema{position:absolute;left:50%;top:calc(100% + .55em);transform:translate(-50%,8px);white-space:nowrap;font-size:clamp(17px,4.4vw,24px);color:var(--gris);opacity:0;animation:lema .9s ease 2.9s forwards}
 @keyframes lema{to{opacity:1;transform:translate(-50%,0)}}
 
 /* barra */
@@ -265,13 +260,29 @@ footer nav a:hover{color:var(--texto)}
 
 <div id="intro" aria-hidden="true">
   <div class="lock">
-    <div class="sim"><span class="brillo"></span><svg viewBox="0 0 100 100"><g transform="translate(50 48.8) scale(0.8986) translate(-57.5 -48.5)">
-      <rect class="palo" x="42" y="50" width="16" height="33" rx="8" fill="#fff"/>
-      <path class="hoja" d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/>
-    </g></svg></div>
+    <span class="hueco"></span>
     <span class="nombre"><span class="l" style="--k:0">e</span><span class="l" style="--k:1">m</span><span class="l p" style="--k:2">p</span><span class="l" style="--k:3">r</span><span class="l e" style="--k:4">e</span><span class="l" style="--k:5">n</span><span class="l d" style="--k:6">d</span><span class="l i" style="--k:7">ı<svg viewBox="47 11 29 34"><path d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/></svg></span><span class="l" style="--k:8">a</span></span>
     <div class="lema s">De la idea al negocio.</div>
   </div>
+  <div class="sim"><svg viewBox="0 0 100 100">
+    <defs>
+      <radialGradient id="iBrillo"><stop offset="0" stop-color="#3fd68a" stop-opacity=".5"/><stop offset="1" stop-color="#3fd68a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="iSuelo"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="iHoja" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2bbf74"/><stop offset=".55" stop-color="#3fd68a"/><stop offset="1" stop-color="#8ff0bd"/></linearGradient>
+      <clipPath id="iTierra"><rect x="-50" y="-60" width="200" height="143"/></clipPath>
+    </defs>
+    <rect class="caja" x="0.5" y="0.5" width="99" height="99" rx="22.37" fill="#0b0b0c" stroke="rgba(255,255,255,.18)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    <g transform="translate(50 48.8) scale(0.8986) translate(-57.5 -48.5)">
+      <circle class="brillo" cx="60" cy="30" r="30" fill="url(#iBrillo)" opacity="0"/>
+      <line class="suelo" x1="22" y1="83" x2="78" y2="83" stroke="url(#iSuelo)" stroke-width=".5" opacity="0"/>
+      <g clip-path="url(#iTierra)"><rect class="palo" x="42" y="50" width="16" height="33" rx="8" fill="#fff" transform="translate(0 34)"/></g>
+      <g class="planta" transform="scale(0)">
+        <path class="hoja" d="M51 42 C56 32 64 22 73 14 C67 24 60 34 51 42 Z" fill="url(#iHoja)" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/>
+        <path class="vena" d="M52.5 40 Q59 29 70 17.5" fill="none" stroke="#14a35a" stroke-width="1.1" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+      </g>
+      <g class="polen"></g>
+    </g>
+  </svg></div>
 </div>
 
 <header class="barra">
@@ -470,19 +481,48 @@ const fmt=n=>Number(n).toLocaleString('es-ES');
 const API=/workers\.dev$|localhost|127\.0\.0\.1/.test(location.hostname)?'':'https://emprendia.widyagency-info.workers.dev';
 const SITIO=/emprendia\.club$/.test(location.hostname)||/workers\.dev$/.test(location.hostname)?'https://emprendia.club':location.origin;
 
-/* intro: la i brota en el centro, se aparta y sale el nombre (solo la primera vez en la sesión; ?intro la fuerza) */
+/* intro: el palo sale de la tierra, brota la hoja y se encoge hasta el icono (primera vez en la sesión; ?intro la fuerza) */
 const intro=$('#intro');
-const quitarIntro=()=>{if(intro.classList.contains('fuera'))return;intro.classList.add('fuera');document.body.classList.add('listo');setTimeout(()=>intro.style.display='none',900)};
+let introViva=false;
+const quitarIntro=()=>{if(intro.classList.contains('fuera'))return;introViva=false;intro.classList.add('fuera');document.body.classList.add('listo');setTimeout(()=>intro.style.display='none',900)};
 const forzar=/[?&]intro\b/.test(location.search);
 if(!forzar&&(ss.get('visto')||matchMedia('(prefers-reduced-motion:reduce)').matches)){intro.style.display='none';document.body.classList.add('listo')}
 else{
-  ss.set('visto','1');
-  const sim=$('.sim',intro),lock=$('.lock',intro);
-  const dx=()=>{const a=lock.getBoundingClientRect(),b=sim.getBoundingClientRect();return (a.left+a.width/2)-(b.left+b.width/2)};
-  sim.style.transform=`translateX(${dx()}px) scale(2.3)`;
-  setTimeout(()=>{sim.style.transform='';const d=dx();sim.classList.add('caja');
-    sim.animate([{transform:`translateX(${d}px) scale(2.3)`},{transform:'none'}],{duration:800,easing:'cubic-bezier(.5,0,.1,1)'})},1050);
-  const t=setTimeout(quitarIntro,3100);
+  ss.set('visto','1');introViva=true;
+  const sim=$('.sim',intro),svg=$('svg',sim),hueco=$('.hueco',intro);
+  const palo=$('.palo',svg),planta=$('.planta',svg),hoja=$('.hoja',svg),vena=$('.vena',svg),brillo=$('.brillo',svg),suelo=$('.suelo',svg),caja=$('.caja',svg),polen=$('.polen',svg);
+  const cl=x=>x<0?0:x>1?1:x,eo=x=>1-Math.pow(1-x,4),eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+  const muelle=x=>x<=0?0:x>=1?1:1-Math.cos(x*Math.PI*2.2)*Math.exp(-5*x);
+  const A=[[56,32],[64,22],[67,24],[60,34]],B=[[50,30],[57,19],[72,27],[65,38]];
+  const NS='http://www.w3.org/2000/svg',motas=[];
+  for(let k=0;k<7;k++){const c=document.createElementNS(NS,'circle');c.setAttribute('r',(.45+Math.random()*.6).toFixed(2));c.setAttribute('fill','#8ff0bd');c.setAttribute('opacity','0');polen.appendChild(c);
+    motas.push({c,x:54+Math.random()*20,y:22+Math.random()*16,s:1.05+k*.09+Math.random()*.1,dx:(Math.random()-.5)*6})}
+  const t0=performance.now();
+  const paso=()=>{
+    if(!introViva)return;
+    const t=(performance.now()-t0)/1000;
+    palo.setAttribute('transform',`translate(0 ${(34*(1-eo(cl((t-.15)/.7)))).toFixed(2)})`);
+    suelo.setAttribute('opacity',(t<.5?cl((t-.05)/.35):1-cl((t-.85)/.45)).toFixed(3));
+    const g=muelle(cl((t-.75)/1.05)),u=eio(cl((t-.95)/.8)),r=-38*(1-muelle(cl((t-.75)/1.15))),dy=9*(1-eo(cl((t-.75)/.45)));
+    planta.setAttribute('transform',`translate(0 ${dy.toFixed(2)}) rotate(${r.toFixed(2)} 51 42) translate(51 42) scale(${Math.max(g,.0001).toFixed(4)}) translate(-51 -42)`);
+    const P=A.map((a,i)=>[a[0]+(B[i][0]-a[0])*u,a[1]+(B[i][1]-a[1])*u].map(n=>n.toFixed(2)).join(' '));
+    hoja.setAttribute('d',`M51 42 C${P[0]} ${P[1]} 73 14 C${P[2]} ${P[3]} 51 42 Z`);
+    vena.setAttribute('stroke-dashoffset',(1-eo(cl((t-1.05)/.7))).toFixed(3));
+    vena.setAttribute('opacity',(.9*(1-cl((t-1.85)/.35))).toFixed(3));
+    hoja.setAttribute('fill',t>2.2?'#3fd68a':'url(#iHoja)');
+    brillo.setAttribute('opacity',(t<1.25?.9*eo(cl((t-.8)/.45)):.9*(1-cl((t-1.25)/.6))).toFixed(3));
+    for(const m of motas){const q=cl((t-m.s)/1.25);m.c.setAttribute('cx',(m.x+m.dx*q).toFixed(2));m.c.setAttribute('cy',(m.y-14*eo(q)).toFixed(2));m.c.setAttribute('opacity',(q>0&&q<1?.85*Math.sin(Math.PI*q):0).toFixed(3))}
+    if(t<2.4)requestAnimationFrame(paso);else{vena.setAttribute('opacity','0');hoja.setAttribute('fill','#3fd68a');hoja.setAttribute('d','M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z');planta.removeAttribute('transform')}
+  };
+  requestAnimationFrame(paso);
+  setTimeout(()=>{
+    const a=sim.getBoundingClientRect(),b=hueco.getBoundingClientRect();
+    const dx=(b.left+b.width/2)-(a.left+a.width/2),dy=(b.top+b.height/2)-(a.top+a.height/2),k=b.width/a.width;
+    const fin=`translate(-50%,-50%) translate(${dx}px,${dy}px) scale(${k})`;
+    sim.animate([{transform:'translate(-50%,-50%)'},{transform:fin}],{duration:850,easing:'cubic-bezier(.55,0,.15,1)',fill:'forwards'});
+    caja.animate([{opacity:0},{opacity:1}],{duration:600,delay:250,easing:'ease',fill:'forwards'});
+  },1950);
+  const t=setTimeout(quitarIntro,3900);
   intro.addEventListener('click',()=>{clearTimeout(t);quitarIntro()});
 }
 
