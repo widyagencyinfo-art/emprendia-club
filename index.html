@@ -140,8 +140,11 @@ section{position:relative}
 /* funcionalidades */
 .func{padding:140px 0 120px}
 .func-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:80px;align-items:start}
-.tel{position:sticky;top:110px;height:min(640px,calc(100vh - 150px));display:grid;place-items:center}
-.tel .pila{position:relative;height:100%;aspect-ratio:640/1340}
+.tel{position:sticky;top:110px;height:min(640px,calc(100vh - 150px));display:grid;place-items:center;perspective:1800px}
+.tel .pila{transform:rotateX(calc(9deg + var(--rx,0deg))) rotateY(calc(-17deg + var(--ry,0deg))) rotateZ(4deg);transition:transform .5s cubic-bezier(.2,.8,.2,1);animation:flota 7s ease-in-out infinite}
+@keyframes flota{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.tel::after{content:"";position:absolute;bottom:-4%;left:50%;width:56%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),transparent);filter:blur(6px);z-index:-1}
+.tel .pila{position:relative;height:100%;aspect-ratio:640/1340;transform-style:preserve-3d}
 .tel img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.97);transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 40px 60px rgba(0,0,0,.6))}
 .tel img.on{opacity:1;transform:none}
 .tel::before{content:"";position:absolute;width:70%;height:60%;background:radial-gradient(closest-side,rgba(63,214,138,.14),transparent);filter:blur(20px)}
@@ -152,6 +155,7 @@ section{position:relative}
 .card h3 em{font-style:normal;font-size:12px;font-weight:600;color:var(--gris2);letter-spacing:0;border:1px solid var(--linea2);border-radius:99px;padding:2px 9px}
 .card p{color:var(--gris);font-size:16px;margin-top:10px;line-height:1.55}
 .card img{display:none}
+.puntos{display:none}
 
 /* historia con línea */
 .hist{padding:60px 0 0}
@@ -187,15 +191,37 @@ section{position:relative}
 .op.tuyo{border-color:rgba(63,214,138,.5)}
 .op .chip{position:relative;white-space:nowrap}
 
+/* fotos de papel (bocetos) */
+.foto{position:relative;border-radius:22px;overflow:hidden;background:#111;box-shadow:0 60px 100px -40px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.06);transform:rotate(-2.5deg);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.foto:hover{transform:rotate(-1deg) scale(1.015)}
+.foto img{width:100%}
+.foto::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 80px 18px rgba(11,11,12,.6);pointer-events:none}
+.foto-boceto{width:min(540px,100%)}
+.foto-plano{width:min(390px,100%);transform:rotate(3deg)}
+.foto-plano:hover{transform:rotate(1.5deg) scale(1.015)}
+.combo{position:relative;width:min(470px,100%);padding-bottom:40px}
+.combo .voto{position:absolute;right:-24px;bottom:0;width:300px;padding:20px;transform:rotate(-2deg);background:rgba(22,22,24,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--linea2);box-shadow:0 40px 80px -20px rgba(0,0,0,.95)}
+.combo .voto h4{font-size:17px}.combo .op{font-size:14px;padding:11px 12px}
+
 /* final */
-.final{padding:150px 0 120px;text-align:center;overflow:hidden}
+.final{padding:150px 0 0;overflow:hidden}
+.final-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.final .form{margin-left:0;margin-right:0}
+.final .legal{text-align:left}
+.escena{position:relative;height:620px;perspective:1600px;display:grid;place-items:start center}
+.escena img{position:relative;width:330px;transform:rotateX(16deg) rotateY(-22deg) rotateZ(9deg) translateY(30px);filter:drop-shadow(0 60px 80px rgba(0,0,0,.8));-webkit-mask-image:linear-gradient(#000 62%,transparent 92%);mask-image:linear-gradient(#000 62%,transparent 92%)}
+.escena::before{content:"";position:absolute;left:50%;top:40%;width:520px;height:520px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(63,214,138,.16),transparent);pointer-events:none}
+.pronto{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-bottom:22px}
+.pronto i{width:7px;height:7px;border-radius:50%;background:var(--brote);box-shadow:0 0 0 4px rgba(63,214,138,.18);animation:late 2s ease-in-out infinite}
+@keyframes late{50%{box-shadow:0 0 0 8px rgba(63,214,138,0)}}
+.xl{display:flex;justify-content:center;padding:30px 0 .1em;margin-top:-40px;font-size:clamp(60px,19vw,300px);line-height:1.05;color:var(--texto);-webkit-mask-image:linear-gradient(180deg,#000 35%,rgba(0,0,0,.18) 92%);mask-image:linear-gradient(180deg,#000 35%,rgba(0,0,0,.18) 92%);user-select:none;pointer-events:none}
 .final::before{content:"";position:absolute;left:50%;top:40%;width:900px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(63,214,138,.13),transparent);pointer-events:none}
-.final .centro{margin:0 auto}
-.final .ico{width:92px;height:92px;margin-bottom:34px;box-shadow:0 0 0 1px var(--linea2) inset,0 30px 70px -20px rgba(63,214,138,.4)}
+.final .centro{max-width:680px;text-align:left;padding:0;align-items:flex-start}
+.final .ico{width:76px;height:76px;margin-bottom:30px;box-shadow:0 0 0 1px var(--linea2) inset,0 30px 70px -20px rgba(63,214,138,.4)}
 .final h2{font-weight:640;font-size:clamp(42px,6.4vw,80px);line-height:1;letter-spacing:-.045em}
 .final h2 .s{font-size:1.1em;color:var(--brote)}
-footer{border-top:1px solid var(--linea);padding:34px 0 44px;color:var(--gris2);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer{padding:0 0 40px;color:var(--gris2);font-size:14px}
+footer .wrap{border-top:1px solid var(--linea);padding-top:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 footer .marca{font-size:22px;color:var(--texto)}
 footer nav{display:flex;gap:22px}
 footer nav a:hover{color:var(--texto)}
@@ -232,18 +258,35 @@ footer nav a:hover{color:var(--texto)}
   .func{padding:90px 0 70px}
   .func-grid{grid-template-columns:1fr;margin-top:46px;gap:0}
   .tel{display:none}
-  .cards{padding:0;gap:18px}
+  .cards{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:2px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .cards::-webkit-scrollbar{display:none}
+  .card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column}
+  .card.on{background:var(--carbon);border-color:var(--linea)}
+  .puntos{display:flex;justify-content:center;gap:6px;margin-top:20px}
+  .puntos i{width:6px;height:6px;border-radius:9px;background:rgba(255,255,255,.18);transition:width .35s,background .35s}
+  .puntos i.on{width:22px;background:var(--brote)}
   .card{opacity:1;cursor:default;padding:24px 22px 0;overflow:hidden}
-  .card img{display:block;width:78%;margin:22px auto 0;height:300px;object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+  .card img{display:block;width:78%;margin:auto auto 0;padding-top:22px;height:300px;object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
   .linea{left:20px}
   .paso{grid-template-columns:1fr;gap:44px;padding:60px 0 60px 36px}
   .paso .vis{order:2;justify-content:flex-start}
   .paso.inv-m .vis{order:2}
   .paso p{font-size:17px}
   .tel-sol{width:250px;height:420px;object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
-  .final{padding:100px 0 90px}
+  .final{padding:100px 0 0}
+  .final-grid{grid-template-columns:1fr;gap:10px;text-align:center}
+  .final .centro{margin:0 auto;text-align:center;align-items:center}
+  .final .form{margin-left:auto;margin-right:auto}
+  .final .legal{text-align:center}
+  .escena{height:400px}
+  .escena img{width:250px}
+  .xl{margin-top:-30px}
+  .combo .voto{right:-6px;width:260px}
 }
 @media (max-width:560px){
+  .combo{padding-bottom:0}
+  .combo .voto{position:relative;right:auto;bottom:auto;width:auto;margin:-70px 0 0 28px}
+  .foto-plano{width:84%}
   .barra{height:54px;padding:0 7px 0 16px}
   .barra .marca{font-size:21px}
   .btn-l{display:none}
@@ -361,6 +404,7 @@ footer nav a:hover{color:var(--texto)}
         <div class="card" data-k="4"><h3>Simulador de ingresos</h3><p>Precio, clientes y gastos. Cuánto puedes ganar de verdad al mes, antes de jugarte nada.</p><img src="/img/simulador.webp" alt="" loading="lazy"></div>
         <div class="card" data-k="5"><h3>Reto 30 días</h3><p>Un objetivo cada día, de cero a tus primeros clientes. Sin teoría: acción.</p><img src="/img/reto.webp" alt="" loading="lazy"></div>
       </div>
+      <div class="puntos" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
 </section>
@@ -396,7 +440,7 @@ footer nav a:hover{color:var(--texto)}
     </div>
 
     <div class="paso">
-      <div class="vis rev"><img class="tel-sol" src="/img/panel.webp" alt="Panel de emprendia" loading="lazy" width="640" height="1340"></div>
+      <div class="vis rev"><div class="foto foto-boceto"><img src="/img/boceto.webp" alt="Boceto a mano de emprendia: validar idea, simulador y reto de 30 días" loading="lazy" width="1200" height="1084"></div></div>
       <div class="rev">
         <h2>La solución</h2>
         <p>Una app que te diga qué hacer hoy.</p>
@@ -411,13 +455,14 @@ footer nav a:hover{color:var(--texto)}
 
     <div class="paso">
       <div class="vis rev">
+        <div class="combo"><div class="foto foto-plano"><img src="/img/plano.webp" alt="Plano a lápiz del icono de emprendia" loading="lazy" width="1000" height="1414"></div>
         <div class="voto">
           <h4>¿Qué sacamos después?</h4>
           <div class="et">Votación de la lista</div>
           <div class="op tuyo" style="--w:68%"><i></i><span>Encontrar mis primeros clientes</span><span class="chip">Tu voto</span></div>
           <div class="op" style="--w:44%"><i></i><span>Mensajes de venta que funcionan</span></div>
           <div class="op" style="--w:31%"><i></i><span>Emprender con un socio</span></div>
-        </div>
+        </div></div>
       </div>
       <div class="rev">
         <h2>Construimos <span class="s">juntos.</span></h2>
@@ -431,8 +476,9 @@ footer nav a:hover{color:var(--texto)}
 </section>
 
 <section class="final" id="final">
+  <div class="wrap final-grid">
   <div class="centro">
-    <svg class="ico rev" viewBox="0 0 100 100"><g transform="translate(50 48.8) scale(0.8986) translate(-57.5 -48.5)"><rect x="42" y="50" width="16" height="33" rx="8" fill="#fff"/><path d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/></g></svg>
+    <div class="pronto rev"><i></i>Acceso anticipado</div>
     <h2 class="rev">Los que se atreven<br><span class="s">empiezan hoy.</span></h2>
     <form class="form rev" data-form novalidate>
       <div class="campo">
@@ -445,12 +491,14 @@ footer nav a:hover{color:var(--texto)}
     </form>
     <div class="dentro"><span>Ya estás dentro · puesto <b data-puesto>#—</b></span><button class="btn btn-v" data-abrir>Sube puestos</button></div>
   </div>
+  <div class="escena rev" aria-hidden="true"><img src="/img/panel.webp" alt="" loading="lazy" width="640" height="1340"></div>
+  </div>
 </section>
 </main>
 
 <footer>
+  <div class="xl" aria-hidden="true"><span class="nombre">em<span class="p">p</span>r<span class="e">e</span>n<span class="d">d</span><span class="i">ı<svg viewBox="47 11 29 34"><path d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/></svg></span>a</span></div>
   <div class="wrap">
-    <span class="marca"><span class="nombre">em<span class="p">p</span>r<span class="e">e</span>n<span class="d">d</span><span class="i">ı<svg viewBox="47 11 29 34"><path d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/></svg></span>a</span></span>
     <nav><a href="#funciona">Cómo funciona</a><a href="/privacidad">Privacidad</a></nav>
     <span>© 2026 emprendia</span>
   </div>
@@ -598,6 +646,17 @@ const imgs=$$('.tel img'),cards=$$('.card');
 const activar=k=>{cards.forEach(c=>c.classList.toggle('on',c.dataset.k==k));imgs.forEach(i=>i.classList.toggle('on',i.dataset.k==k))};
 const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)activar(x.target.dataset.k)}),{rootMargin:'-45% 0px -45% 0px'});
 if(matchMedia('(min-width:901px)').matches){cards.forEach(c=>{io2.observe(c);c.onclick=()=>activar(c.dataset.k)})}
+
+/* móvil (pantalla pequeña): carrusel de herramientas con puntos */
+const carr=$('.cards'),puntos=$$('.puntos i');
+if(carr&&matchMedia('(max-width:900px)').matches){let pt=false;
+  carr.addEventListener('scroll',()=>{if(pt)return;pt=true;requestAnimationFrame(()=>{const w=cards[0].offsetWidth+12,k=Math.round(carr.scrollLeft/w);puntos.forEach((q,i)=>q.classList.toggle('on',i===k));pt=false})},{passive:true})}
+
+/* el móvil 3D sigue un poco al ratón */
+const tel=$('.tel .pila'),func=$('#funciona');
+if(tel&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  func.addEventListener('mousemove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;tel.style.setProperty('--ry',(x*10).toFixed(2)+'deg');tel.style.setProperty('--rx',(-y*8).toFixed(2)+'deg')},{passive:true});
+  func.addEventListener('mouseleave',()=>{tel.style.setProperty('--ry','0deg');tel.style.setProperty('--rx','0deg')})}
 
 /* línea verde que avanza */
 const hist=$('#hist'),fill=$('#lineaFill');
