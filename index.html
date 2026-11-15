@@ -38,13 +38,26 @@ img{display:block;max-width:100%}
 .ico{flex:none;border-radius:22.37%;background:var(--noche);box-shadow:0 0 0 1px var(--linea2) inset}
 
 /* intro: la i que brota */
-#intro{position:fixed;inset:0;z-index:100;background:var(--noche);display:grid;place-items:center;transition:opacity .5s ease,visibility .5s}
+#intro{position:fixed;inset:0;z-index:100;background:var(--noche);display:grid;place-items:center;overflow:hidden;cursor:pointer;transition:opacity .6s ease .15s,visibility .6s .15s}
 #intro.fuera{opacity:0;visibility:hidden}
-#intro svg{width:120px;height:120px;overflow:visible}
-#intro .palo{transform-box:fill-box;transform-origin:50% 100%;animation:crece .55s cubic-bezier(.2,.8,.2,1) both}
-#intro .hoja{transform-box:fill-box;transform-origin:0% 100%;animation:brota .6s cubic-bezier(.3,1.5,.5,1) .38s both}
+#intro .lock{position:relative;display:flex;align-items:center;gap:.2em;font-size:clamp(40px,11.5vw,84px);transition:transform .7s cubic-bezier(.6,0,.3,1),opacity .5s ease}
+#intro.fuera .lock{transform:translateY(-.5em) scale(.96);opacity:0}
+#intro .sim{position:relative;width:1.22em;height:1.22em;flex:none;overflow:visible;will-change:transform}
+#intro .sim::before{content:'';position:absolute;inset:0;border-radius:22.37%;background:#161618;box-shadow:0 0 0 1px var(--linea2) inset,0 20px 50px -20px rgba(63,214,138,.35);opacity:0;transform:scale(.7);transition:opacity .55s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+#intro .sim.caja::before{opacity:1;transform:none}
+#intro .sim svg{width:100%;height:100%;overflow:visible;position:relative}
+#intro .brillo{position:absolute;left:50%;top:22%;width:2.6em;height:2.6em;margin:-1.3em 0 0 -1.3em;border-radius:50%;background:radial-gradient(closest-side,rgba(63,214,138,.38),rgba(63,214,138,0));opacity:0;animation:brillo 1.5s ease-out .55s both;pointer-events:none}
+@keyframes brillo{0%{opacity:0;transform:scale(.3)}35%{opacity:1}100%{opacity:0;transform:scale(1.35)}}
+#intro .palo{transform-box:fill-box;transform-origin:50% 100%;animation:crece .6s cubic-bezier(.2,.9,.25,1.15) .1s both}
+#intro .hoja{transform-box:fill-box;transform-origin:0% 100%;animation:brota .95s cubic-bezier(.25,.8,.3,1) .5s both}
 @keyframes crece{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-@keyframes brota{from{transform:scale(0) rotate(-25deg)}to{transform:scale(1) rotate(0)}}
+@keyframes brota{0%{transform:scale(0) rotate(-40deg)}55%{transform:scale(1.12) rotate(7deg)}78%{transform:scale(.97) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
+#intro .nombre{font-size:1em}
+#intro .l{display:inline-block;opacity:0;transform:translateY(.32em);filter:blur(8px);animation:letra .6s cubic-bezier(.2,.8,.2,1) calc(1.3s + var(--k)*.04s) forwards}
+@keyframes letra{to{opacity:1;transform:none;filter:blur(0)}}
+#intro .nombre .i svg path{transform-box:fill-box;transform-origin:0% 100%;animation:brota .8s cubic-bezier(.25,.8,.3,1) 1.75s both}
+#intro .lema{position:absolute;left:50%;top:calc(100% + .55em);transform:translate(-50%,8px);white-space:nowrap;font-size:clamp(17px,4.4vw,24px);color:var(--gris);opacity:0;animation:lema .8s ease 1.85s forwards}
+@keyframes lema{to{opacity:1;transform:translate(-50%,0)}}
 
 /* barra */
 .barra{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;width:min(1180px,100% - 24px);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 20px;border-radius:999px;background:rgba(18,18,20,.72);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--linea)}
@@ -251,10 +264,14 @@ footer nav a:hover{color:var(--texto)}
 <body>
 
 <div id="intro" aria-hidden="true">
-  <svg viewBox="0 0 100 100"><g transform="translate(50 48.8) scale(0.8986) translate(-57.5 -48.5)">
-    <rect class="palo" x="42" y="50" width="16" height="33" rx="8" fill="#fff"/>
-    <path class="hoja" d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/>
-  </g></svg>
+  <div class="lock">
+    <div class="sim"><span class="brillo"></span><svg viewBox="0 0 100 100"><g transform="translate(50 48.8) scale(0.8986) translate(-57.5 -48.5)">
+      <rect class="palo" x="42" y="50" width="16" height="33" rx="8" fill="#fff"/>
+      <path class="hoja" d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/>
+    </g></svg></div>
+    <span class="nombre"><span class="l" style="--k:0">e</span><span class="l" style="--k:1">m</span><span class="l p" style="--k:2">p</span><span class="l" style="--k:3">r</span><span class="l e" style="--k:4">e</span><span class="l" style="--k:5">n</span><span class="l d" style="--k:6">d</span><span class="l i" style="--k:7">ı<svg viewBox="47 11 29 34"><path d="M51 42 C50 30 57 19 73 14 C72 27 65 38 51 42 Z" fill="#3fd68a" stroke="#3fd68a" stroke-width="4" stroke-linejoin="round"/></svg></span><span class="l" style="--k:8">a</span></span>
+    <div class="lema s">De la idea al negocio.</div>
+  </div>
 </div>
 
 <header class="barra">
@@ -453,11 +470,21 @@ const fmt=n=>Number(n).toLocaleString('es-ES');
 const API=/workers\.dev$|localhost|127\.0\.0\.1/.test(location.hostname)?'':'https://emprendia.widyagency-info.workers.dev';
 const SITIO=/emprendia\.club$/.test(location.hostname)||/workers\.dev$/.test(location.hostname)?'https://emprendia.club':location.origin;
 
-/* intro: solo la primera vez en la sesión */
+/* intro: la i brota en el centro, se aparta y sale el nombre (solo la primera vez en la sesión; ?intro la fuerza) */
 const intro=$('#intro');
-const quitarIntro=()=>{intro.classList.add('fuera');document.body.classList.add('listo')};
-if(ss.get('visto')||matchMedia('(prefers-reduced-motion:reduce)').matches){intro.style.display='none';document.body.classList.add('listo')}
-else{ss.set('visto','1');setTimeout(quitarIntro,1350)}
+const quitarIntro=()=>{if(intro.classList.contains('fuera'))return;intro.classList.add('fuera');document.body.classList.add('listo');setTimeout(()=>intro.style.display='none',900)};
+const forzar=/[?&]intro\b/.test(location.search);
+if(!forzar&&(ss.get('visto')||matchMedia('(prefers-reduced-motion:reduce)').matches)){intro.style.display='none';document.body.classList.add('listo')}
+else{
+  ss.set('visto','1');
+  const sim=$('.sim',intro),lock=$('.lock',intro);
+  const dx=()=>{const a=lock.getBoundingClientRect(),b=sim.getBoundingClientRect();return (a.left+a.width/2)-(b.left+b.width/2)};
+  sim.style.transform=`translateX(${dx()}px) scale(2.3)`;
+  setTimeout(()=>{sim.style.transform='';const d=dx();sim.classList.add('caja');
+    sim.animate([{transform:`translateX(${d}px) scale(2.3)`},{transform:'none'}],{duration:800,easing:'cubic-bezier(.5,0,.1,1)'})},1050);
+  const t=setTimeout(quitarIntro,3100);
+  intro.addEventListener('click',()=>{clearTimeout(t);quitarIntro()});
+}
 
 /* de dónde viene */
 const q=new URLSearchParams(location.search);
