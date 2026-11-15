@@ -83,6 +83,8 @@ h1 .s{font-size:1.1em;letter-spacing:-.02em;display:inline-block;padding-right:.
 .campo:focus-within{border-color:rgba(63,214,138,.6);box-shadow:0 0 0 5px rgba(63,214,138,.12)}
 .campo input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--texto);font:500 16px Inter,sans-serif;padding:0 16px;height:46px}
 .campo input::placeholder{color:var(--gris2)}
+/* que el autorrelleno de Chrome/Safari no pinte el campo de azul claro */
+.campo input:-webkit-autofill,.campo input:-webkit-autofill:hover,.campo input:-webkit-autofill:focus,.campo input:autofill{-webkit-text-fill-color:var(--texto);caret-color:var(--texto);-webkit-background-clip:text;background-clip:text;transition:background-color 99999s ease 0s,color 99999s ease 0s;font:500 16px Inter,sans-serif}
 .campo .btn{height:46px;padding:0 22px;font-size:15px}
 .trampa{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .micro{margin-top:14px;font-size:13px;color:var(--gris2);display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
